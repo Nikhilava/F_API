@@ -1,0 +1,106 @@
+from typing import Union
+
+from fastapi import FastAPI,Form,File,UploadFile,HTTPException,Depends
+from typing import Union
+from enum import Enum
+from pydantic import BaseModel
+app = FastAPI()
+
+class Item(BaseModel):
+    name: str
+
+    number: float
+
+
+class ModelName(str, Enum):  #choice parameter
+    name = "priti"
+    roll_num = 1
+    status = "pass"
+
+@app.get("/")
+def read_root():
+    return {"Hello": "World"}
+
+@app.get("/fast_api")
+def function(name:str):
+    response="hello"+name
+    return response
+
+#path parameter ex
+@app.get("/{name}")
+def function(item:str):
+    name={'path variable', item}
+    return name
+
+# @app.get("query/")
+# def function(name:str,roll_number:Union[int,None]=None):  #  #unio used to pss empty value not requried fild compalsery
+#     var={"name":name,"roll_number":roll_number}
+#     return {var}
+@app.get("/items/{item_id}")
+def read_item(item_id: int, q: Union[str, None] = None):
+    return {"item_id": item_id, "q": q}
+
+@app.get("/models/{model_name}")
+async def get_model(model_name: ModelName):
+
+    if model_name.value == "priti":
+        return {"model_name": model_name, "message": "calling priti"}
+
+    if model_name.value == "1":
+        return {"model_name": model_name, "message": "calling 1"}
+
+    return {"model_name": model_name, "message": "Have some residuals"}
+
+#REQUEST BODY
+
+@app.post("/itrms")
+def create(item:Item):
+    return item
+@app.post("/p")
+def create():
+    return 'hello word'
+
+#FORM DATA (pip install python-multipart)
+@app.post("/form")
+async def form_data(username:str=Form(),password:str=Form()):
+    return ({"username":username,"password":password})
+
+# FILE UPLOAD
+@app.post("/file/upload")
+async def file_upload(file:bytes=File()):
+    return ({"file":len(file)})
+
+@app.post("/upload/file")
+async def upload_file(file1:UploadFile,file2:bytes=File()):
+    return ({"file_name":file1.filename,"file_length":len(file2)})
+
+
+#fastapi ERROR HANDLING(Exception handling)
+#import HTTPexception
+
+@app.get("/error/handling")
+async def error_handling(item:int):
+    if item!=2:
+        return HTTPException(status_code=400, detail="only given input requried")
+    return {"value":item}
+
+items=[1,22,3,4]
+@app.get("/error/handling1")
+async def error(item:int):
+    if item not in items:
+        return HTTPException(status_code=400,detail='only items code put')
+    return {"value":item}
+
+
+#
+
+##DATA BASE CONNECTIVI
+
+#DEPANDENCY INJUCTIONS
+async def nikhil(name:str,roll_no:int):
+    return {"name":name,"roll_no":roll_no}
+
+@app.get("/de")
+async def priti(coman:dict=Depends(nikhil)):
+    return coman
+

@@ -1,0 +1,30 @@
+#git processes
+1) git init
+2) git demo.txt(file created)
+3) gitt status
+4) git add .
+5) git commit -m 'initial commit'
+ ##go to git hub 
+6)create new repositoary
+7)generate ssh key (setting -ssh and gps key-generate ssh key-generate sshh key-email copy-
+8) email pest in command(put register mail address)
+9)add egent (evel "$(ssh-agent -)" in commnad
+10) add ssh private ssh-add ~/.ssh/id_ed2519
+11)adding new ssh key git hub account
+12)$ clip < ~/.ssh/id_ed25519.pub (coy and pest on new ssh key )
+13) git log
+14)git config --global user.name nikhil(who nt regisetr this persion only config) usr.email (put email)
+15)git log
+16)go to repo and copy ssh key
+17)got remote add origin (copy ssh key) 
+18)git remote -v(chek origin is add or not)
+19)git push origin master
+20) git clone(copy email and write git clone email)
+################
+21)ls --lart (hiddden folder show)
+22)git checkout(working diractory commit with last commit)
+23)git checkout -f(more the one file math with last commit file)
+24)git log(all commit file shows)
+25)git log -p -1(only last 1 commited file show)
+26)git rm file name(file deleted and also deleted staged  area)
+27)git rm --cached(ony remove deleted stage area)
